@@ -20,7 +20,7 @@ import java.util.List;
 @Validated
 public class StatsClientController {
 
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm:ss" );
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final StatsClient statsClient;
 
