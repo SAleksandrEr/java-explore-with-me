@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class GetEventRequest {
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm:ss" );
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime start;
     LocalDateTime end;
     List<String> uris;
@@ -21,7 +21,7 @@ public class GetEventRequest {
         request.setStart(LocalDateTime.parse(start, dateTimeFormatter));
         request.setEnd(LocalDateTime.parse(end, dateTimeFormatter));
         request.setUnique(unique);
-        if(uris != null) {
+        if (uris != null) {
             request.setUris(uris);
         }
         return request;
