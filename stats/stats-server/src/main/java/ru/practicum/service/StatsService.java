@@ -14,9 +14,8 @@ import ru.practicum.model.QEvent;
 import ru.practicum.storage.EventRepositoryJpa;
 import ru.practicum.EventDto;
 import ru.practicum.EventDtoResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -61,13 +60,12 @@ public class StatsService {
         }
     }
 
-
     private List<EventDtoResponse> countHitsDistinct(List<EventDtoResponse> eventDtoResponse) {
         eventDtoResponse
                     .forEach(uriEvent -> uriEvent.setHits(eventDtoResponse.stream().filter(count -> uriEvent.getUri().equals(count.getUri())).count()));
         Map<String, EventDtoResponse> eventListMap = eventDtoResponse.stream().collect(Collectors
                 .toMap(EventDtoResponse::getUri, Function.identity(), (existing, replacement) -> existing));
 
-        return new ArrayList<>(eventListMap.values());
+        return eventListMap.values().stream().sorted().collect(Collectors.toList());
     }
 }

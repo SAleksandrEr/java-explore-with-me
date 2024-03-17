@@ -40,7 +40,7 @@ public class StatsClient extends BaseClient {
             parameters = Map.of("start", start, "end", end, "unique", unique);
             return get(API_STATS + "?start={start}&end={end}&unique={unique}", null, parameters);
         } else {
-            parameters = Map.of("start", start, "end", end, "uris", uris, "unique", unique);
+            parameters = Map.of("start", start, "end", end, "uris", uris.toArray(), "unique", unique);
             return get(API_STATS + "?start={start}&end={end}&uris={uris}&unique={unique}", null, parameters);
         }
     }

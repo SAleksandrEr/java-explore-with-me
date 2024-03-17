@@ -1,13 +1,15 @@
 package ru.practicum;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class GetEventRequest {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -28,6 +30,6 @@ public class GetEventRequest {
     }
 
     public boolean hasUris() {
-        return uris != null && uris.isEmpty();
+        return uris != null && !uris.isEmpty();
     }
 }
