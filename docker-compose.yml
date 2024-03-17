@@ -1,15 +1,44 @@
 version: '3.1'
 services:
-  stats-server:
+  stats-client:
+    build: ./stats/stats-client
+    image: stats-client
+    container_name: stats-client
     ports:
+      - "9091:9091"
       - "9090:9090"
+    depends_on:
+      - stats-server
+    volumes:
+      - /usr/share/zoneinfo/Europe:/usr/share/zoneinfo/Europe:ro
+    environment:
+      - STATS_SERVER_URL=http://stats-server:8080
+  stats-server:
+    build: ./stats/stats-server
+    image: stats-server
+    container_name: stats-server
+    ports:
+      - "8081:8081"
+      - "8080:8080"
+    depends_on:
+      - stats-db
+    volumes:
+      - /usr/share/zoneinfo/Europe:/usr/share/zoneinfo/Europe:ro
+    environment:
+      - DB_NAME=Stats
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=purrrrrr
+      - DB_HOST=stats-db
+      - DB_PORT=5432
 
   stats-db:
     image: postgres:14-alpine
-
-  ewm-service:
+    container_name: stats-db
     ports:
-      - "8080:8080"
-
-  ewm-db:
-    image: postgres:14-alpine
+      - "6541:5432"
+    volumes:
+      - /usr/share/zoneinfo/Europe:/usr/share/zoneinfo/Europe:ro
+    environment:
+      - POSTGRES_DB=Stats
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=purrrrrr
