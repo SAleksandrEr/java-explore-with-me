@@ -19,6 +19,7 @@ import java.util.List;
 public class StatsController {
 
     private final StatsService statsService;
+
     @Transactional
     @RequestMapping(path = "/hit")
     @PostMapping

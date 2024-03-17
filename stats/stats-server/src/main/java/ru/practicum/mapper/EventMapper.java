@@ -9,8 +9,7 @@ import ru.practicum.model.Event;
 @Mapper(componentModel = "spring")
 public interface EventMapper {
 
-    @Mapping(target="timestamp", source="eventDto.timestamp",
-            dateFormat="yyyy-MM-dd HH:mm:ss")
+    @Mapping(target="timestamp", source = "eventDto.timestamp", dateFormat = "yyyy-MM-dd HH:mm:ss")
     Event toEvent(EventDto eventDto);
 
     EventDtoResponse toEventDtoResponse(Event events);
