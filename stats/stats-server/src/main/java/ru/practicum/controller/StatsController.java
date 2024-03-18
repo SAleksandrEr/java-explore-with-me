@@ -9,8 +9,6 @@ import ru.practicum.EventDtoResponse;
 import ru.practicum.GetEventRequest;
 import ru.practicum.service.StatsService;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -34,9 +32,5 @@ public class StatsController {
                                                  @RequestParam(value = "uris", required = false) List<String> uris,
                                                  @RequestParam(value = "unique", defaultValue = "false") Boolean unique) {
         return statsService.getStatsEvents(GetEventRequest.of(start,end, uris, unique));
-    }
-
-    private String decode(String value) {
-        return URLDecoder.decode(value, StandardCharsets.UTF_8);
     }
 }

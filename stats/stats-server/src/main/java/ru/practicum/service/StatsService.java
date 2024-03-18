@@ -2,6 +2,7 @@ package ru.practicum.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class StatsService {
 
     private final EventRepositoryJpa eventRepositoryJpa;
 
+    @Value("${page.size}")
+    private int pageSize;
+
     @Transactional
     public void createEvent(EventDto eventDto) {
         Event event = eventMapper.toEvent(eventDto);
@@ -46,7 +50,7 @@ public class StatsService {
                 .reduce(BooleanExpression::and)
                 .get();
         Sort sort = Sort.by("ip");
-        PageRequest pageRequest = PageRequest.of(0, 20, sort);
+        PageRequest pageRequest = PageRequest.of(0, pageSize, sort);
         List<Event> eventList = eventRepositoryJpa.findAll(finalCondition, pageRequest)
                 .stream().collect(Collectors.toList());
         if (request.getUnique().equals(true)) {

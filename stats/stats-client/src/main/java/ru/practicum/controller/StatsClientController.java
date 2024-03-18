@@ -9,8 +9,6 @@ import ru.practicum.EventDto;
 import ru.practicum.exception.ValidationException;
 
 import javax.validation.Valid;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -45,9 +43,5 @@ public class StatsClientController {
         }
 
         return statsClient.getStatsEvent(start, end, uris, unique);
-    }
-
-    private String encodeValue(String value) {
-        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 }
