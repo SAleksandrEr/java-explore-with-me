@@ -5,7 +5,6 @@ services:
     image: stats-client
     container_name: stats-client
     ports:
-      - "9091:9091"
       - "9090:9090"
     depends_on:
       - stats-server
@@ -18,8 +17,7 @@ services:
     image: stats-server
     container_name: stats-server
     ports:
-      - "8081:8081"
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - stats-db
     volumes:
@@ -40,5 +38,35 @@ services:
       - /usr/share/zoneinfo/Europe:/usr/share/zoneinfo/Europe:ro
     environment:
       - POSTGRES_DB=Stats
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=purrrrrr
+
+  main-service:
+    build: ./main-service
+    image: main-service
+    container_name: main-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - service-db
+    volumes:
+      - /usr/share/zoneinfo/Europe:/usr/share/zoneinfo/Europe:ro
+    environment:
+      - STATS_SERVER_URL=http://stats-client:9090
+      - DB_NAME=service
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=purrrrrr
+      - DB_HOST=service-db
+      - DB_PORT=5432
+
+  service-db:
+    image: postgres:14-alpine
+    container_name: service-db
+    ports:
+      - "6542:5432"
+    volumes:
+      - /usr/share/zoneinfo/Europe:/usr/share/zoneinfo/Europe:ro
+    environment:
+      - POSTGRES_DB=service
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=purrrrrr

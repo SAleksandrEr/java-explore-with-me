@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>stats-server</artifactId>
-
+    <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -21,9 +21,10 @@
     <dependencies>
 
         <dependency>
-            <groupId>ru.practicum</groupId>
+            <groupId>ru.practicum.ewm</groupId>
             <artifactId>stats-dto</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
+            <type>jar</type>
         </dependency>
 
         <dependency>
