@@ -108,8 +108,8 @@ public class EventService {
                 LocalDateTime currant = LocalDateTime.now();
                 LocalDateTime eventDate = LocalDateTime.parse(eventUserRequest.getEventDate(), dateTimeFormatter);
                 if (eventDate.isBefore(currant.plusHours(2))) {
-                    throw new ConditionsDataException("Field: eventDate. Error: должно содержать дату, которая еще не наступила. Value: " + eventDate
-                            , "For the requested operation the conditions are not met.", HttpStatus.BAD_REQUEST);
+                    throw new ConditionsDataException("Field: eventDate. Error: должно содержать дату, которая еще не наступила. Value: " + eventDate,
+                            "For the requested operation the conditions are not met.", HttpStatus.BAD_REQUEST);
                 }
                 event.setEventDate(eventDate);
             }
@@ -143,8 +143,8 @@ public class EventService {
             }
             eventRepositoryJpa.save(event);
         } else {
-            throw new ConditionsDataException("Only pending or canceled events can be changed"
-                    , "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
+            throw new ConditionsDataException("Only pending or canceled events can be changed",
+                    "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
         }
         return eventMapper.toEventFullDto(event);
     }
@@ -196,12 +196,12 @@ public class EventService {
                 LocalDateTime currant = LocalDateTime.now();
                 LocalDateTime eventDate = LocalDateTime.parse(eventAdminRequest.getEventDate(), dateTimeFormatter);
                 if (eventDate.isBefore(currant.plusHours(2))) {
-                    throw new ConditionsDataException("Field: eventDate. Error: должно содержать дату, которая еще не наступила. Value: " + eventDate
-                            , "For the requested operation the conditions are not met.", HttpStatus.BAD_REQUEST);
+                    throw new ConditionsDataException("Field: eventDate. Error: должно содержать дату, которая еще не наступила. Value: " + eventDate,
+                            "For the requested operation the conditions are not met.", HttpStatus.BAD_REQUEST);
                 }
                 if (event.getState().equals(StateEventEnum.PUBLISHED) && event.getPublishedOn().isBefore(eventDate.plusHours(1))) {
-                    throw new ConditionsDataException("Cannot publish the event because it's not in the right state: PUBLISHED"
-                            , "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
+                    throw new ConditionsDataException("Cannot publish the event because it's not in the right state: PUBLISHED",
+                            "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
                 }
                 event.setEventDate(eventDate);
             }
@@ -229,8 +229,8 @@ public class EventService {
                     event.setState(StateEventEnum.PUBLISHED);
                     event.setPublishedOn(LocalDateTime.parse(LocalDateTime.now().withNano(0).format(dateTimeFormatter), dateTimeFormatter));
                 } else {
-                    throw new ConditionsDataException("Cannot publish the event because it's not in the right state: PUBLISHED"
-                            , "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
+                    throw new ConditionsDataException("Cannot publish the event because it's not in the right state: PUBLISHED",
+                            "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
                 }
             }
             if (eventAdminRequest.getTitle() != null) {

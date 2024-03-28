@@ -33,8 +33,8 @@ public class EventControllerPrivate {
         LocalDateTime currant = LocalDateTime.now();
         LocalDateTime eventDate = LocalDateTime.parse(newEventDto.getEventDate(), dateTimeFormatter);
         if (eventDate.isBefore(currant.plusHours(2))) {
-            throw new ConditionsDataException("Field: eventDate. Error: должно содержать дату, которая еще не наступила. Value: " + eventDate
-                    , "For the requested operation the conditions are not met.", HttpStatus.BAD_REQUEST);
+            throw new ConditionsDataException("Field: eventDate. Error: должно содержать дату, которая еще не наступила. Value: " + eventDate, "For the requested operation the conditions are not met.",
+                    HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(eventService.createEvent(userId, newEventDto), HttpStatus.CREATED);
     }

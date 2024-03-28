@@ -41,19 +41,19 @@ public class RequestsService {
         Event event = eventRepositoryJpa.findById(eventId).orElseThrow(
                 () -> new DataNotFoundException("Event with id=" + eventId + " was not found", "The required object was not found."));
         if (event.getInitiator().getId().equals(userId)) {
-            throw new ConditionsDataException("Инициатор события не может добавить запрос на участие в своём событии"
-                    , "Integrity constraint has been violated.", HttpStatus.CONFLICT);
+            throw new ConditionsDataException("Инициатор события не может добавить запрос на участие в своём событии",
+                    "Integrity constraint has been violated.", HttpStatus.CONFLICT);
         }
         if (!event.getState().equals(StateEventEnum.PUBLISHED)) {
-            throw new ConditionsDataException("Нельзя участвовать в неопубликованном событии"
-                    , "Integrity constraint has been violated.", HttpStatus.CONFLICT);
+            throw new ConditionsDataException("Нельзя участвовать в неопубликованном событии",
+                    "Integrity constraint has been violated.", HttpStatus.CONFLICT);
         }
         if (event.getParticipantLimit() != 0) {
             int limit = requestRepositoryJpa.findByEventIdAndStatus(eventId, StatusEnumRequest.CONFIRMED).size();
             int limitReq = event.getParticipantLimit();
             if (limit >= limitReq) {
-                throw new ConditionsDataException("У события достигнут лимит запросов на участие"
-                        , "Integrity constraint has been violated.", HttpStatus.CONFLICT);
+                throw new ConditionsDataException("У события достигнут лимит запросов на участие",
+                        "Integrity constraint has been violated.", HttpStatus.CONFLICT);
             }
         }
         ParticipationRequest participationRequest = new ParticipationRequest();
@@ -79,8 +79,8 @@ public class RequestsService {
             participationRequest.setStatus(StatusEnumRequest.CANCELED);
             requestRepositoryJpa.updateRequest(participationRequest.getStatus(), requestId);
         } else {
-            throw new ConditionsDataException("User with id=" + userId + " was not owner of the request"
-                    , "The required object was not found.", HttpStatus.NOT_FOUND);
+            throw new ConditionsDataException("User with id=" + userId + " was not owner of the request",
+                    "The required object was not found.", HttpStatus.NOT_FOUND);
         }
         return requestMapper.toParticipationRequestDto(participationRequest);
     }
@@ -120,8 +120,8 @@ public class RequestsService {
                     }
                 }
             } else {
-                throw new ConditionsDataException("The participant limit has been reached"
-                        , "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
+                throw new ConditionsDataException("The participant limit has been reached",
+                        "For the requested operation the conditions are not met.", HttpStatus.CONFLICT);
             }
             for (ParticipationRequest reqId : listRequests) {
                 requestRepositoryJpa.updateRequest(reqId.getStatus(), reqId.getId());

@@ -35,6 +35,7 @@ public class UserService {
         User user = userMapper.toUser(userDto);
         return userMapper.touserDto(userRepositoryJpa.save(user));
     }
+
     @Transactional
     public void deleteUserById(Long id) {
         userRepositoryJpa.findById(id)

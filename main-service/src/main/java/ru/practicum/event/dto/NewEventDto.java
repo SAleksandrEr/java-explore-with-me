@@ -14,14 +14,14 @@ import javax.validation.constraints.*;
 public class NewEventDto {
 
     @NotBlank
-    @Size(min=20,max=2000)
+    @Size(min = 20,max = 2000)
     private String annotation;
 
     @NotNull
     private Long category;
 
     @NotBlank
-    @Size(min=20,max=7000)
+    @Size(min = 20,max = 7000)
     private String description;
 
     @NotBlank
@@ -37,7 +37,7 @@ public class NewEventDto {
     private Boolean requestModeration;
 
     @NotBlank
-    @Size(min=3,max=120)
+    @Size(min = 3,max = 120)
     private String title;
 
     public Boolean getPaid() {

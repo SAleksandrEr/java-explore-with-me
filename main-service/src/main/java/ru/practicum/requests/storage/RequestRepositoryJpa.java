@@ -23,7 +23,7 @@ public interface RequestRepositoryJpa extends JpaRepository<ParticipationRequest
 
     List<ParticipationRequest> findByRequesterId(Long userId);
 
-    List<ParticipationRequest> findByEventIdAndIdIn(Long eventId, List<Long> RequestIds);
+    List<ParticipationRequest> findByEventIdAndIdIn(Long eventId, List<Long> requestIds);
 
     List<ParticipationRequest> findByEventId(Long eventId);
 

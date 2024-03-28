@@ -46,8 +46,8 @@ public class EventControllerPublic {
             LocalDateTime startDate = LocalDateTime.parse(rangeStart, dateTimeFormatter);
             LocalDateTime endDate = LocalDateTime.parse(rangeEnd, dateTimeFormatter);
             if (startDate.isAfter(endDate) || startDate.equals(endDate)) {
-                throw new ConditionsDataException("Field: rangeStart or rangeEnd. Value: " + rangeStart + " " + rangeEnd
-                        , "For the requested operation the conditions are not met.", HttpStatus.BAD_REQUEST);
+                throw new ConditionsDataException("Field: rangeStart or rangeEnd. Value: " + rangeStart + " " + rangeEnd, "For the requested operation the conditions are not met.",
+                        HttpStatus.BAD_REQUEST);
             }
         }
         GetEventRequestPublic getEventRequestPublic = GetEventRequestPublic.of(text, rangeStart, rangeEnd, onlyAvailable, categories, paid, sort, from, size);
