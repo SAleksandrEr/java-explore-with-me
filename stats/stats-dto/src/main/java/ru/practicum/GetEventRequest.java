@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class GetEventRequest {
+
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime start;
     LocalDateTime end;
@@ -20,8 +21,12 @@ public class GetEventRequest {
 
     public static GetEventRequest of(String start, String end, List<String> uris, Boolean unique) {
         GetEventRequest request = new GetEventRequest();
-        request.setStart(LocalDateTime.parse(start, dateTimeFormatter));
-        request.setEnd(LocalDateTime.parse(end, dateTimeFormatter));
+        if (start != null) {
+            request.setStart(LocalDateTime.parse(start, dateTimeFormatter));
+        }
+        if (end != null) {
+            request.setEnd(LocalDateTime.parse(end, dateTimeFormatter));
+        }
         request.setUnique(unique);
         if (uris != null) {
             request.setUris(uris);

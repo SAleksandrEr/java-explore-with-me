@@ -27,8 +27,8 @@ public class StatsController {
 
     @RequestMapping(path = "/stats")
     @GetMapping
-    public List<EventDtoResponse> getStatsEvents(@RequestParam(value = "start") String start,
-                                                 @RequestParam(value = "end") String end,
+    public List<EventDtoResponse> getStatsEvents(@RequestParam(value = "start", required = false) String start,
+                                                 @RequestParam(value = "end", required = false) String end,
                                                  @RequestParam(value = "uris", required = false) List<String> uris,
                                                  @RequestParam(value = "unique", defaultValue = "false") Boolean unique) {
         return statsService.getStatsEvents(GetEventRequest.of(start,end, uris, unique));

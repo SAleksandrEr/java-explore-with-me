@@ -8,13 +8,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.GetEventRequest;
-import ru.practicum.mapper.EventMapper;
-import ru.practicum.model.Event;
-import ru.practicum.model.QEvent;
-import ru.practicum.storage.EventRepositoryJpa;
 import ru.practicum.EventDto;
 import ru.practicum.EventDtoResponse;
+import ru.practicum.GetEventRequest;
+import ru.practicum.model.QEvent;
+import ru.practicum.mapper.EventMapper;
+import ru.practicum.model.Event;
+import ru.practicum.storage.EventRepositoryJpa;
 
 import java.util.*;
 import java.util.function.Function;
@@ -44,14 +44,17 @@ public class StatsService {
     if (request.hasUris()) {
             conditions.add(event.uri.in(request.getUris()));
     }
-    conditions.add(event.timestamp.after(request.getStart()));
-    conditions.add(event.timestamp.before(request.getEnd()));
-        BooleanExpression finalCondition = conditions.stream()
-                .reduce(BooleanExpression::and)
-                .get();
+    if (request.getStart() != null) {
+            conditions.add(event.timestamp.after(request.getStart()));
+        }
+    if (request.getEnd() != null) {
+        conditions.add(event.timestamp.before(request.getEnd()));
+    }
+        Optional<BooleanExpression> finalCondition = conditions.stream()
+                .reduce(BooleanExpression::and);
         Sort sort = Sort.by("ip");
         PageRequest pageRequest = PageRequest.of(0, pageSize, sort);
-        List<Event> eventList = eventRepositoryJpa.findAll(finalCondition, pageRequest)
+        List<Event> eventList = eventRepositoryJpa.findAll(finalCondition.orElse(event.isNotNull()), pageRequest)
                 .stream().collect(Collectors.toList());
         if (request.getUnique().equals(true)) {
             Map<String, Event> eventListMap = eventList.stream().collect(Collectors

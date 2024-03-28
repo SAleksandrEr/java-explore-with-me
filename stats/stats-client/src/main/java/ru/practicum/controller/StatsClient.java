@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
-import ru.practicum.client.BaseClient;
 import ru.practicum.EventDto;
+import ru.practicum.client.BaseClient;
 
 import java.util.List;
 import java.util.Map;
@@ -39,6 +39,15 @@ public class StatsClient extends BaseClient {
         if (uris == null) {
             parameters = Map.of("start", start, "end", end, "unique", unique);
             return get(API_STATS + "?start={start}&end={end}&unique={unique}", null, parameters);
+        } else if (start == null && end == null) {
+            parameters = Map.of("uris", uris.toArray(), "unique", unique);
+            return get(API_STATS + "?uris={uris}&unique={unique}", null, parameters);
+        } else if (start == null) {
+            parameters = Map.of("end", end, "uris", uris.toArray(), "unique", unique);
+            return get(API_STATS + "?end={end}&uris={uris}&unique={unique}", null, parameters);
+        } else if (end == null) {
+            parameters = Map.of("start", start,  "uris", uris.toArray(), "unique", unique);
+            return get(API_STATS + "?start={start}&uris={uris}&unique={unique}", null, parameters);
         } else {
             parameters = Map.of("start", start, "end", end, "uris", uris.toArray(), "unique", unique);
             return get(API_STATS + "?start={start}&end={end}&uris={uris}&unique={unique}", null, parameters);
